@@ -248,7 +248,6 @@ if __name__ == "__main__":
 
     sigopt_api_token = args.sigopt_api_token
 
-    # TODO(alexandra) with folds
     folds = build_folds(data_spec=data_spec, kfolds=kfolds)
     conn = Connection(client_token=sigopt_api_token)
     experiment = build_experiment(conn)
@@ -256,7 +255,6 @@ if __name__ == "__main__":
     for _ in range(experiment.observation_budget):
         suggestion = conn.experiments(experiment.id).suggestions().create()
         model_spec = build_model_spec(assignments=suggestion.assignments)
-        # TODO(alexandra): with evaluations
         evaluations = build_evaluations(model_spec=model_spec, folds=folds)
         (avg_auc, std_auc) = collect_performance(evaluations)
         cleanup_evaluations(evaluations)
