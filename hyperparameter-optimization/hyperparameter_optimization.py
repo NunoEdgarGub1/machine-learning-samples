@@ -225,4 +225,4 @@ if __name__ == "__main__":
 
     print """Best assignments are:
  - Regularization Type: {regularization_type}
- - Regularization Amount: {regulization_amount}""".format(**assignments)
+ - Regularization Amount: {regularization_amount}""".format(**assignments)
