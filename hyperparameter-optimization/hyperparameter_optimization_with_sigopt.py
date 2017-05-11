@@ -269,3 +269,5 @@ if __name__ == "__main__":
         )
 
     cleanup_folds(folds)
+
+    logger.info("View your experiment and its best hyperparameters at https://www.sigopt.com/experiment/%s", experiment.id)
