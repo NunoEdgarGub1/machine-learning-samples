@@ -32,9 +32,7 @@ class Evaluation(object):
     def __str__(self):
         """
         Returns the string representing this fold object. The string
-        includes the IDs of entities newly created on Amazon ML, as
-        well as the DataRearrangement string for each newly created
-        datasource.
+        includes the IDs of entities newly created on Amazon ML.
         """
         return """\n\
 Evalaution {fold_ordinal} of {kfolds}:

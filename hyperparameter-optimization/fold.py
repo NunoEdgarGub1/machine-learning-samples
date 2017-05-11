@@ -70,16 +70,12 @@ class Fold(object):
     def __str__(self):
         """
         Returns the string representing this fold object. The string
-        includes the IDs of entities newly created on Amazon ML, as
-        well as the DataRearrangement string for each newly created
-        datasource.
+        includes the IDs of entities newly created on Amazon ML.
         """
         return """\n\
 Fold {fold_ordinal} of {kfolds}:
  - Training Datasource ID: {train_ds_id}
- - Training Datasource Rearrangement: {train_ds_rearrange}
- - Evaluation Datasource ID: {eval_ds_id}
- - Evaluation Datasource Rearrangement: {eval_ds_rearrange}""".format(**self.__dict__)
+ - Evaluation Datasource ID: {eval_ds_id}""".format(**self.__dict__)
 
     def create_datasources(self):
         """
