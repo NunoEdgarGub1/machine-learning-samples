@@ -2,3 +2,5 @@
 *.swp
 .DS_Store
 *.class
+venv/*
+*/local-python/*
