@@ -44,6 +44,12 @@ This sample shows how to use the Amazon Machine Learning API to evaluate ML mode
 
 * [K-fold Cross-validation Sample (Python)](k-fold-cross-validation/)
 
+## Hyperparameter Optimization Pipeline
+
+This example builds off of the K-fold Cross-validation example to create a pipeline for optimization the exposed hyperparameters in a single script.
+
+* [Hyperparameter Optimization Pipeline (Python)](hyperparameter-optimization/)
+
 
 ## Other tools
 
