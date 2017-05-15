@@ -47,7 +47,7 @@ The basic demo is in the script `hyperparameter_optimization.py`. This script re
 The arguments to `hyperparameter_optimization.py` are the number of folds (required), and an optional resource prefix.
 
 ```
-python hyperparameter_optimization.py --name 4-fold-hy-opt-demo 4
+python hyperparameter_optimization.py --name 4-fold-hp-opt-demo 4
 ```
 
 The script `hyperparameter_optimization_with_sigopt.py` uses the [SigOpt](https://www.sigopt.com) API to optimally suggest hyperparameters for the model.
@@ -56,7 +56,7 @@ The script `hyperparameter_optimization_with_sigopt.py` uses the [SigOpt](https:
 Run the script `hyperparameter_optimization_with_sigopt.py` with all of the options in the above section, and additionally provide your SigOpt API token.
 
 ```
-python hyperparameter_optimization_with_sigopt.py --name 4-fold-hy-opt-sigopt-demo 4 --sigopt-api-token <SIGOPT_API_TOKEN>
+python hyperparameter_optimization_with_sigopt.py --name 4-fold-hp-opt-sigopt-demo 4 --sigopt-api-token <SIGOPT_API_TOKEN>
 ```
 
 ### How it Works
