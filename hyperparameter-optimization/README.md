@@ -71,21 +71,21 @@ Hyperparameter optimization works to maximize some performance metric of your mo
 
 In keeping with best practices for hyperparameter optimization, and to prevent over-fitting of the model, this example actually maximizes the average of k-fold cross validated AUC metrics. This description skips over the details of how cross validation is performed with Amazon ML, because it is described much better in the README for the [K-Fold Cross Validation](https://github.com/awslabs/machine-learning-samples/tree/master/k-fold-cross-validation) example that formed the basis for this code sample.
 
-To perform the hyperparameter optimization the scripts iteratively choose new values of `regularization_type` and `regularization_amount`, evaluate a model with these new hyperparameters for every fold of the data, average the AUC metrics, and record the performance of the assignments. At the end of some number of evaluations, the assignments that produced the best model performance are selected. The final model will use these hyperparameters and be trained on all of the available data.
+To perform hyperparameter optimization the scripts iteratively choose new values of `regularization_type` and `regularization_amount`, evaluates a model with these new hyperparameters for every fold of the data, averages the AUC metrics, and records the performance of the assignments. At the end of a fixed number of evaluations the assignments that produced the best model performance are selected. The final model will use these best hyperparameters and be trained on all of the available data.
 
-If you optimize with SigOpt you can see the best hyperparameters on your [dashboard](https://www.sigopt.com/experiments).
+The basic script will print out the best hyperparameters. If you optimize with SigOpt you can see the best hyperparameters, and all other hyperparameter evaluations, on your [dashboard](https://www.sigopt.com/experiments).
 
 ### Under the Hood
 
 Assume `k` is the number of folds for cross validation. At startup each script will create `2k` datasources on Amazon ML: a train datasource and a complementary evaluation datasource for each fold. The datasources can be reused throughout hyperparameter optimization and are cleaned up at the end of the script.
 
-Next, the script grabs the next assignments for hyperparameters `regularization_type` and `regularization_amount`. In the basic script these hyperparameter are imported from `hyperparameters.py`; in the SigOpt example they are created via the SigOpt API. Each time the script evaluates a model on a new set of hyperparameters is creates `k` machine learning models, one for each train datasource, and `k` evaluations, one for each evaluate datasource, on Amazon ML. These objects cannot be reused and are deleted once all evaluations have completed.
+Next, the script grabs the next assignments for hyperparameters `regularization_type` and `regularization_amount`. In the basic script these hyperparameter are imported from `hyperparameters.py`; in the SigOpt example they are created via the SigOpt API. Each time the script evaluates a model on a new set of hyperparameters it creates `k` machine learning models, one for each train datasource, and `k` evaluations, one for each evaluate datasource, on Amazon ML. These objects cannot be reused and are deleted once their associated evaluations have completed.
 
 After evaluations are created the script spawn threads to poll the Amazon ML API until the evaluations have status `"COMPLETED"`. Once every thread has completed we compute the average and standard deviation of the `k` AUC metrics. At this point the script is ready to grab the next assignments of hyperparameters and repeat. At SigOpt, we call this process the **optimization loop**.
 
 ### Parallelism
 
-Amazon Machine Learning asynchronously creates datasources, machine learning models, and evaluations. API calls via the python SDK will return quickly so that you can build a datasource, machine learning model, and an evaluation while the datasource is still pending! Since your machine is not doing the heavy computation of training and testing the model, it has great opportunities for parallelization, splitting up the optimization loop between `n` different threads or processes.
+Amazon Machine Learning asynchronously creates datasources, machine learning models, and evaluations. API calls via the python SDK will return quickly so that you can build a datasource, machine learning model, and an evaluation while the datasource is still pending! Since your machine is not doing the heavy computation of training and testing the model, it has great opportunities for parallelization. For starters, you can try splitting up the optimization loop between `n` different threads or processes.
 
 If you're running the SigOpt example, read how easy it is to [parallelize hyperparameter optimization with SigOpt](https://sigopt.com/docs/overview/parallel).
 
